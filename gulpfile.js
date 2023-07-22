@@ -5,6 +5,11 @@ var sass = require('gulp-sass')(require('sass'));
 var cssbeautify = require('gulp-cssbeautify');
 var stripCssComments = require('gulp-strip-css-comments');
 var rename = require("gulp-rename");
+var rigger = require('gulp-rigger');
+var uglify = require('gulp-uglify');
+var plumber = require('gulp-plumber');
+
+
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
@@ -32,8 +37,17 @@ gulp.task('sass', function(){
 		        require('cssnano')({
             preset: 'default',
         })
+		.pipe(plumber())
+
         .pipe(gulp.dest('dist'))
         .pipe(browserSync.reload({stream: true})) 
 
 		 
 });
+gulp.task('jst', async ()=> {
+    return gulp.src(['js/*.js']) 
+        .pipe(rigger())
+		.pipe(uglify())
+        .pipe(gulp.dest('dist/'));
+});
+exports.default = 'jst';

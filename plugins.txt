@@ -1,0 +1,10 @@
+browser-sync
+sass
+autoprefixer
+cssbeautify
+stripCssComments
+rename
+cssnano
+rigger
+uglify
+plumber
