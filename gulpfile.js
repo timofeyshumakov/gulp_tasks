@@ -1,7 +1,7 @@
 var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var reload      = browserSync.reload;
-
+const sass = require('gulp-sass')(require('sass'));
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
@@ -20,8 +20,10 @@ gulp.task('serve', function () {
 
 const autoprefixer = require('gulp-autoprefixer');
 
-exports.default = () => (
-	gulp.src('css\\style.css')
-		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-		.pipe(gulp.dest('dist'))
-);
+gulp.task('sass', function(){ 
+    return gulp.src(['css/style.sass']) 
+        .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+        .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
+        .pipe(gulp.dest('app/css')) 
+        .pipe(browserSync.reload({stream: true})) 
+});
