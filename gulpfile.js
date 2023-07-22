@@ -15,4 +15,13 @@ gulp.task('serve', function () {
     });
 
     gulp.watch("*.html").on("change", reload);
+	
 });
+
+const autoprefixer = require('gulp-autoprefixer');
+
+exports.default = () => (
+	gulp.src('css\\style.css')
+		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
+		.pipe(gulp.dest('dist'))
+);
