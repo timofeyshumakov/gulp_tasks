@@ -1,7 +1,10 @@
 var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var reload      = browserSync.reload;
-const sass = require('gulp-sass')(require('sass'));
+var sass = require('gulp-sass')(require('sass'));
+var cssbeautify = require('gulp-cssbeautify');
+var stripCssComments = require('gulp-strip-css-comments');
+var rename = require("gulp-rename");
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
@@ -18,12 +21,19 @@ gulp.task('serve', function () {
 	
 });
 
-const autoprefixer = require('gulp-autoprefixer');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('sass', function(){ 
     return gulp.src(['css/style.sass']) 
+	.pipe(cssbeautify())
         .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+.pipe(stripCssComments())
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-        .pipe(gulp.dest('app/css')) 
+		        require('cssnano')({
+            preset: 'default',
+        })
+        .pipe(gulp.dest('dist'))
         .pipe(browserSync.reload({stream: true})) 
+
+		 
 });
