@@ -7,7 +7,8 @@ var stripCssComments = require('gulp-strip-css-comments');
 var rename = require("gulp-rename");
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
-var plumber = require('gulp-plumber');
+var cssnano = require('cssnano');
+var autoprefixer = require('gulp-autoprefixer');
 
 
 // Save a reference to the `reload` method
@@ -26,28 +27,23 @@ gulp.task('serve', function () {
 	
 });
 
-var autoprefixer = require('gulp-autoprefixer');
 
-gulp.task('sass', function(){ 
-    return gulp.src(['css/style.sass']) 
-	.pipe(cssbeautify())
-        .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-.pipe(stripCssComments())
-        .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-		        require('cssnano')({
-            preset: 'default',
-        })
-		.pipe(plumber())
 
-        .pipe(gulp.dest('dist'))
-        .pipe(browserSync.reload({stream: true})) 
 
-		 
-});
+
+exports.default = () => (
+	gulp.src('css\\style.css')
+		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
+
+		.pipe(cssbeautify())
+		.pipe(stripCssComments())
+		.pipe(gulp.dest('dist'))
+);
 gulp.task('jst', async ()=> {
     return gulp.src(['js/*.js']) 
         .pipe(rigger())
 		.pipe(uglify())
         .pipe(gulp.dest('dist/'));
 });
-exports.default = 'jst';
+exports.jst = 'jst';
+exports.sass = 'sass';
