@@ -7,7 +7,6 @@ var stripCssComments = require('gulp-strip-css-comments');
 var rename = require("gulp-rename");
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
-var cssnano = require('cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 
 
@@ -34,10 +33,9 @@ gulp.task('serve', function () {
 exports.default = () => (
 	gulp.src('css\\style.css')
 		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-
 		.pipe(cssbeautify())
 		.pipe(stripCssComments())
-		.pipe(gulp.dest('dist'))
+		.pipe(gulp.dest('dist/'))
 );
 gulp.task('jst', async ()=> {
     return gulp.src(['js/*.js']) 
