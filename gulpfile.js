@@ -36,7 +36,7 @@ exports.watchers = () => {
 		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
 		.pipe(cssbeautify())
 		.pipe(stripCssComments())
-		.pipe(gulp.dest('dist/'))
+		.pipe(gulp.dest('../css'))
 		.pipe(browserSync.reload({stream: true})) 
     done();
   });
@@ -54,7 +54,7 @@ exports.watchers = () => {
 	   gulp.src(['js/*.js']) 
         .pipe(rigger())
 		.pipe(uglify())
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('../js'));
     done();
   });
 };
