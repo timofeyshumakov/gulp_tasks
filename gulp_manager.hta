@@ -1,0 +1,82 @@
+<HTA:APPLICATION
+ID="APPLICATION"
+APPLICATIONNAME="Application"
+BORDER="dialog"
+BORDERSTYLE="normal"
+CAPTION="yes"
+ICON=""
+windowState="maximize"
+MAXIMIZEBUTTON="no"
+MINIMIZEBUTTON="no"
+SHOWINTASKBAR="yes"
+SINGLEINSTANCE="no"
+SYSMENU="yes"
+VERSION="1.0"
+WINDOWSTATE="normal" 
+INNERBORDER="no"
+SCROLL="no"
+CONTEXTMENU="yes"
+/>
+<STYLE>
+.wrapper{
+	min-height:100%;
+	overflow:hidden;
+max-width:300px;
+	display: flex;
+	background-color: #ffffff;
+	justify-content: center;
+}
+</STYLE>
+<BODY>
+<div class="wrapper" id="wrapper">
+<div class="txt1" id="txt1">watchers</div>
+<div class="txt2" id="txt2">converters</div>
+<div class="txt3" id="txt3">cleaner</div>
+</div>
+</BODY>
+<script type="text/javascript" language="javascript">
+window.resizeTo(320, 500);
+window.moveTo((screen.width-320)/2, (screen.height-500)/2);
+document.getElementById('wrapper').style.display='flex';
+document.getElementById('wrapper').style.justifyContent = 'center';
+document.getElementById('txt1').style.fontSize='24' + 'px';
+document.getElementById('txt1').style.margin= '50' + 'px';
+document.getElementById('txt1').style.padding= '20' + 'px';
+document.getElementById('txt1').style.border= '2px solid black';
+
+document.getElementById('txt2').style.fontSize='24' + 'px';
+document.getElementById('txt2').style.margin= '50' + 'px';
+document.getElementById('txt2').style.padding= '20' + 'px';
+document.getElementById('txt2').style.border= '2px solid black';
+
+document.getElementById('txt3').style.fontSize='24' + 'px';
+document.getElementById('txt3').style.margin= '50' + 'px';
+document.getElementById('txt3').style.padding= '20' + 'px';
+document.getElementById('txt3').style.border= '2px solid black';
+
+var linetxt1="";
+var linetxt2="";
+var oShell = new ActiveXObject("Shell.Application");
+	var fso = new ActiveXObject("Scripting.FileSystemObject");
+var f = fso.OpenTextFile('gulp_launcher.bat', 2);
+
+document.getElementById('txt1').onclick = function() {
+ linetxt1= "cd %~dp0";
+ linetxt2="gulp watchers";
+	go();
+  };
+  
+  document.getElementById('txt1').onclick = function() {
+ linetxt1= "cd %~dp0";
+ linetxt2="gulp converters";
+	go();
+  };
+  
+  function go(){
+  f.WriteLine(linetxt1);
+    f.WriteLine(linetxt2);
+    f.Close();
+  var commandtoRun = "C:\\papki\\work\\1)Programming\\web\\projtect_tmplate\\gulp\\gulp_launcher.bat";
+oShell.ShellExecute(commandtoRun,"","","open","3");
+  }
+</script>
