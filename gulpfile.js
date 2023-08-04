@@ -4,24 +4,33 @@ var reload      = browserSync.reload;
 var sass = require('gulp-sass')(require('sass'));
 var cssbeautify = require('gulp-cssbeautify');
 var stripCssComments = require('gulp-strip-css-comments');
-var rename = require("gulp-rename");
+
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
 var pug = require('gulp-pug');
 var svgmin =require('gulp-svgmin');
-
+var webp = require('gulp-webp');
+var { series, parallel } = require('gulp');
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
 gulp.task('serve', (cb) =>{
 
- gulp.src('projtect_tmplate/source/*.svg')
+  gulp.src('../sourse/*.svg')
     .pipe(svgmin())
-    .pipe(gulp.dest('dist/'));
+ .pipe(gulp.dest('../img'))
+
 	cb();
 });
+gulp.task('serve1', (cb) =>{
 
+  gulp.src('../sourse/**')
+
+	.pipe(webp())
+	.pipe(gulp.dest('../img'));
+	cb();
+});
 
 exports.watchers = () => {
 	 
@@ -59,11 +68,5 @@ exports.watchers = () => {
   });
 };
 
-exports.defaultTask = (cb) => {
-  gulp.src('../sourse/*.svg')
-  
-    .pipe(svgmin())
- .pipe(gulp.dest('../img'))
-	cb();
-};
 
+gulp.task(`default`,  gulp.series(`serve`, `serve1`));
