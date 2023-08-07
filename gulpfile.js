@@ -4,7 +4,7 @@ var reload      = browserSync.reload;
 var sass = require('gulp-sass')(require('sass'));
 var cssbeautify = require('gulp-cssbeautify');
 var stripCssComments = require('gulp-strip-css-comments');
-var clean = require("gulp-clean");
+
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
@@ -15,8 +15,6 @@ var { series, parallel } = require('gulp');
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
-
-
 gulp.task('serve', (cb) =>{
 
   gulp.src('../sourse/*.svg')
@@ -35,16 +33,15 @@ gulp.task('serve1', (cb) =>{
 });
 
 exports.watchers = () => {
-
-
+	 
 	    browserSync.init({
         server: {
-            baseDir: __dirname.replace('gulp','')
+           baseDir: __dirname.replace('gulp','')
         }
     });
 	
-  gulp.watch("*.sass", (done) => {
-	gulp.src('css\\style.css')
+  gulp.watch("../css/*.sass", (done) => {
+	gulp.src('..//css//style.css')
 		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
 		.pipe(cssbeautify())
 		.pipe(stripCssComments())
@@ -53,7 +50,7 @@ exports.watchers = () => {
     done();
   });
 
-  gulp.watch("*.html").on("change", reload);
+  gulp.watch("../*.html").on("change", reload);
   
   gulp.watch("*.pug", (done) => {
    gulp.src('*.pug')
@@ -62,7 +59,7 @@ exports.watchers = () => {
       done();
   });
   
-   gulp.watch("*.js", (done) => {
+   gulp.watch("../js/*.js", (done) => {
 	   gulp.src(['js/*.js']) 
         .pipe(rigger())
 		.pipe(uglify())
