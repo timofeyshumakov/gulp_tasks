@@ -4,7 +4,7 @@ var reload      = browserSync.reload;
 var sass = require('gulp-sass')(require('sass'));
 var cssbeautify = require('gulp-cssbeautify');
 var stripCssComments = require('gulp-strip-css-comments');
-
+var clean = require("gulp-clean");
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
@@ -15,6 +15,8 @@ var { series, parallel } = require('gulp');
 // Save a reference to the `reload` method
 
 // Watch scss AND html files, doing different things with each.
+
+
 gulp.task('serve', (cb) =>{
 
   gulp.src('../sourse/*.svg')
@@ -33,10 +35,11 @@ gulp.task('serve1', (cb) =>{
 });
 
 exports.watchers = () => {
-	 
+
+
 	    browserSync.init({
         server: {
-            baseDir: "./"
+            baseDir: __dirname.replace('gulp','')
         }
     });
 	

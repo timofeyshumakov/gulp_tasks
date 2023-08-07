@@ -35,6 +35,7 @@ max-width:300px;
 </div>
 </BODY>
 <script type="text/javascript" language="javascript">
+
 window.resizeTo(320, 500);
 window.moveTo((screen.width-320)/2, (screen.height-500)/2);
 document.getElementById('wrapper').style.display='flex';
@@ -66,12 +67,17 @@ document.getElementById('txt1').onclick = function() {
 	go();
   };
   
-  document.getElementById('txt1').onclick = function() {
+  document.getElementById('txt2').onclick = function() {
  linetxt1= "cd %~dp0";
  linetxt2="gulp converters";
 	go();
   };
-  
+    document.getElementById('txt3').onclick = function() {
+	var oShell = new ActiveXObject("Shell.Application");
+	var commandtoRun = "C:\\papki\\work\\1)Programming\\web\\projtect_tmplate\\gulp\\gulp_launcher.bat";
+oShell.ShellExecute(commandtoRun,"","","open","3");
+
+  };
   function go(){
   f.WriteLine(linetxt1);
     f.WriteLine(linetxt2);
@@ -79,4 +85,5 @@ document.getElementById('txt1').onclick = function() {
   var commandtoRun = "C:\\papki\\work\\1)Programming\\web\\projtect_tmplate\\gulp\\gulp_launcher.bat";
 oShell.ShellExecute(commandtoRun,"","","open","3");
   }
+  
 </script>
