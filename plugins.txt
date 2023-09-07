@@ -1,10 +1,10 @@
-browser-sync
 sass
-autoprefixer
 cssbeautify
 stripCssComments
-rename
-cssnano
+plumber
 rigger
 uglify
-plumber
+autoprefixer
+pug
+svgmin
+webp
