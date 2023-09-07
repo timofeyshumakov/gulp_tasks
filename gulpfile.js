@@ -4,7 +4,7 @@ var reload      = browserSync.reload;
 var sass = require('gulp-sass')(require('sass'));
 var cssbeautify = require('gulp-cssbeautify');
 var stripCssComments = require('gulp-strip-css-comments');
-
+var plumber = require('gulp-plumber');
 var rigger = require('gulp-rigger');
 var uglify = require('gulp-uglify');
 var autoprefixer = require('gulp-autoprefixer');
@@ -41,7 +41,9 @@ exports.watchers = () => {
     });
 	
   gulp.watch("../css/*.sass", (done) => {
-	gulp.src('..//css//style.css')
+	gulp.src('..//css//style.sass')
+		.pipe(sass.sync().on('error', sass.logError))
+		.pipe(gulp.dest('../css'))
 		.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
 		.pipe(cssbeautify())
 		.pipe(stripCssComments())
@@ -51,11 +53,14 @@ exports.watchers = () => {
   });
 
   gulp.watch("../*.html").on("change", reload);
+  gulp.watch("../css/*.css").on("change", reload);
   
-  gulp.watch("*.pug", (done) => {
-   gulp.src('*.pug')
+  gulp.watch("../*.pug", (done) => {
+   gulp.src('../*.pug')
+	.pipe(plumber())
     .pipe(pug({}))
-    .pipe(gulp.dest('dist/'));
+	
+    .pipe(gulp.dest('../'));
       done();
   });
   
@@ -69,4 +74,4 @@ exports.watchers = () => {
 };
 
 
-gulp.task(`default`,  gulp.series(`serve`, `serve1`));
+gulp.task(`converters`,  gulp.series(`serve`, `serve1`));
